@@ -1,8 +1,10 @@
 import episodes from "./episodes.json";
 import Post from "./utils/Components/Post";
+import { useState } from "react";
 
 function App(): JSX.Element {
-  const posts = episodes.map((element) => (
+  const [text,setText] = useState('');
+  const posts = episodes.filter((element) => text === '' || ((element.name.toLowerCase().includes(text.toLowerCase()) || element.summary.toLowerCase().includes(text.toLowerCase()) && text.length === 0))).map((element) => (
     <Post
       key={element.id}
       id={element.id}
@@ -25,6 +27,10 @@ function App(): JSX.Element {
     <>
       <header>
         <h1>Game Of Thrones</h1>
+        <div className='tools'>
+            <input placeholder='your search term...' onChange={(e) => setText(e.target.value)}/>
+            {text.length > 0 && <p>Displaying {posts.length}/{episodes.length} episodes</p>}
+        </div>
       </header>
 
       <main className="container">{posts}</main>

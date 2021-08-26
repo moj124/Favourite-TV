@@ -58,3 +58,18 @@ footer {
 header {
   text-align: center;
 }
+
+.tools{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  height: 20px;
+  margin: 5px;
+}
+
+.tools p{
+  font-size: 1rem;
+}
