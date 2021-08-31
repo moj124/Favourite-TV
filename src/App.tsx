@@ -1,11 +1,20 @@
-import episodes from "./episodes.json";
-import Post from "./utils/Components/Post";
-import { useState } from "react";
-// import { element } from "prop-types";
+import Post, { IEpisode } from "./utils/Components/Post";
+import { useState, useEffect } from "react";
 import { toPad } from "./utils/toPad";
 
 function App(): JSX.Element {
   const [text, setText] = useState("");
+  const [episodes, setEpisodes] = useState<IEpisode[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(`https://api.tvmaze.com/shows/82/episodes`);
+      const jsonBody: IEpisode[] = await response.json();
+      setEpisodes(jsonBody);
+    };
+
+    getData();
+  }, []);
 
   const posts = episodes
     .filter(
