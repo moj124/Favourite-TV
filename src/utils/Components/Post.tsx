@@ -1,3 +1,5 @@
+import { toPad } from "../toPad";
+
 interface IEpisode {
   id: number;
   url: string;
@@ -10,7 +12,7 @@ interface IEpisode {
   airstamp: string;
   runtime: number;
   image: {
-    medium: string;
+    medium: string | null;
     original: string;
   };
   summary: string;
@@ -25,17 +27,10 @@ function Post(props: IEpisode): JSX.Element {
       <h2>
         {props.name} - S{paddedSeason}E{paddedEpisode}
       </h2>
-      <img src={props.image.medium} alt=""></img>
+      {props.image.medium && <img src={props.image.medium} alt=""></img>}
       <p>{props.summary.replace(/(<([^>]+)>)/gi, "")}</p>
     </div>
   );
-}
-
-function toPad(number: number): string {
-  return number.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
 }
 
 export default Post;
