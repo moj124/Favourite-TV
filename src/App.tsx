@@ -4,6 +4,7 @@ import { toPad } from "./utils/toPad";
 
 function App(): JSX.Element {
   const [text, setText] = useState("");
+  const [selectText, setSelector] = useState("");
   const [episodes, setEpisodes] = useState<IEpisode[]>([]);
 
   useEffect(() => {
@@ -19,8 +20,21 @@ function App(): JSX.Element {
   const posts = episodes
     .filter(
       (element) =>
+        selectText === "Select" ||
+        (
+          "S" +
+          toPad(element.season) +
+          "E" +
+          toPad(element.number) +
+          " - " +
+          element.name
+        )
+          .toLowerCase()
+          .includes(selectText.toLowerCase())
+    )
+    .filter(
+      (element) =>
         text.length === 0 ||
-        text === "Select" ||
         (
           "S" +
           toPad(element.season) +
@@ -71,11 +85,15 @@ function App(): JSX.Element {
           <select
             name="episodes"
             id="episodes"
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => setSelector(e.target.value)}
+            value={selectText}
           >
             <option>Select</option>
             {options}
           </select>
+          {selectText !== "Select" && (
+            <button onClick={() => setSelector("Select")}>Clear Select</button>
+          )}
         </div>
         <div className="tools">
           <input
