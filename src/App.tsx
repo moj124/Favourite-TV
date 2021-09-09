@@ -9,7 +9,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(`https://api.tvmaze.com/shows/82/episodes`);
+      const response = await fetch(`https://api.tvmaze.com/shows/527/episodes`);
       const jsonBody: IEpisode[] = await response.json();
       setEpisodes(jsonBody);
     };
